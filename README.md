@@ -3,50 +3,57 @@
 ## 🚀 Getting Started
 
 ### Prerequisites
-- PHP 8.2+
-- MySQL/MariaDB
-- Composer
-- Node.js & npm
+
+-   PHP 8.2+
+-   MySQL/MariaDB
+-   Composer
+-   Node.js & npm
 
 ### Installation
 
 1. **Install PHP Dependencies**
-   ```bash
-   composer install
-   ```
+
+    ```bash
+    composer install
+    ```
 
 2. **Install Node Dependencies**
-   ```bash
-   npm install
-   ```
+
+    ```bash
+    npm install
+    ```
 
 3. **Setup Environment**
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
+
+    ```bash
+    cp .env.example .env
+    php artisan key:generate
+    ```
 
 4. **Configure Database** (in `.env`)
-   ```
-   DB_DATABASE=bdeshi_explorer
-   DB_USERNAME=root
-   DB_PASSWORD=
-   ```
+
+    ```
+    DB_DATABASE=bdeshi_explorer
+    DB_USERNAME=root
+    DB_PASSWORD=
+    ```
 
 5. **Run Migrations & Seeders**
-   ```bash
-   php artisan migrate:fresh --seed
-   ```
+
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
 
 6. **Build Frontend Assets**
-   ```bash
-   npm run build
-   ```
+
+    ```bash
+    npm run build
+    ```
 
 7. **Start Development Server**
-   ```bash
-   php artisan serve
-   ```
+    ```bash
+    php artisan serve
+    ```
 
 Visit: `http://localhost:8000`
 
@@ -54,45 +61,50 @@ Visit: `http://localhost:8000`
 
 ## 👥 Default Login Credentials
 
-| Role | Email | Password |
-|------|-------|----------|
-| Admin | admin@bdeshi-explorer.com | password |
+| Role      | Email                         | Password |
+| --------- | ----------------------------- | -------- |
+| Admin     | admin@bdeshi-explorer.com     | password |
 | Moderator | moderator@bdeshi-explorer.com | password |
-| Explorer | explorer@example.com | password |
+| Explorer  | explorer@example.com          | password |
 
 ---
 
 ## 🎯 Key Features
 
 ### ✨ Landing Page
-- **Hero Section**: Full-screen banner with CTA buttons
-- **About Section**: Company info with 4 key features
-- **Tours Section**: 6 sample tours with filtering by category
-- **Events Section**: Auto-playing carousel
-- **Testimonials Section**: Customer reviews grid
-- **CTA Section**: Parallax call-to-action
-- **Footer**: Comprehensive links and social media
+
+-   **Hero Section**: Full-screen banner with CTA buttons
+-   **About Section**: Company info with 4 key features
+-   **Tours Section**: 6 sample tours with filtering by category
+-   **Events Section**: Auto-playing carousel
+-   **Testimonials Section**: Customer reviews grid
+-   **CTA Section**: Parallax call-to-action
+-   **Footer**: Comprehensive links and social media
 
 ### 🎨 Design System
-- **Colors**: Emerald Green (#2ECC71), Sky Blue (#00BFFF)
-- **Typography**: Poppins (headings), Inter (body)
-- **Framework**: Vue 3 + Tailwind CSS v4 + AOS animations
+
+-   **Colors**: Emerald Green (#2ECC71), Sky Blue (#00BFFF)
+-   **Typography**: Poppins (headings), Inter (body)
+-   **Framework**: Vue 3 + Tailwind CSS v4 + AOS animations
 
 ### 🔐 User Roles
-- **Admin**: Full system access (CMS, Tours, Bookings)
-- **Moderator**: Limited admin access (Tours, Bookings)
-- **Explorer**: Book tours, manage own bookings
+
+-   **Admin**: Full system access (CMS, Tours, Bookings)
+-   **Moderator**: Limited admin access (Tours, Bookings)
+-   **Explorer**: Book tours, manage own bookings
 
 ### 📦 Booking System
-- Payment Methods: Bank Transfer, MFS (bKash/Nagad/Rocket), Pay Later
-- Auto capacity management
-- Booking workflow: pending → in_process → approved → completed
+
+-   Payment Methods: Bank Transfer, MFS (bKash/Nagad/Rocket), Pay Later
+-   Auto capacity management
+-   Booking workflow: pending → in_process → approved → completed
 
 ---
 
 ## 📡 API Endpoints
 
 ### Public APIs
+
 ```
 GET  /api/v1/public/tours
 GET  /api/v1/public/events
@@ -100,6 +112,7 @@ GET  /api/v1/public/testimonials
 ```
 
 ### Explorer APIs (Auth Required)
+
 ```
 POST /api/v1/bookings           - Create booking
 GET  /api/v1/bookings           - My bookings
@@ -107,6 +120,7 @@ POST /api/v1/bookings/{id}/cancel
 ```
 
 ### Admin APIs (Admin/Moderator)
+
 ```
 /api/v1/admin/cms               - CMS management
 /api/v1/admin/tours             - Tour management
@@ -120,12 +134,14 @@ POST /api/v1/bookings/{id}/cancel
 ## 🗄️ Database
 
 ### Seeded Data
-- 1 Admin, 1 Moderator, 6 Explorers
-- 6 Tours (Sundarbans, Cox's Bazar, Sylhet, etc.)
-- 4 CMS sections (Hero, About, CTA, Contact)
+
+-   1 Admin, 1 Moderator, 6 Explorers
+-   6 Tours (Sundarbans, Cox's Bazar, Sylhet, etc.)
+-   4 CMS sections (Hero, About, CTA, Contact)
 
 ### Key Tables
-- users, tours, bookings, events, testimonials, c_m_s_contents
+
+-   users, tours, bookings, events, testimonials, c_m_s_contents
 
 ---
 
@@ -157,19 +173,18 @@ php artisan migrate:fresh --seed  # Reset database
 
 ## 📚 Documentation
 
-- `README.md` - Quick start guide (this file)
-- `BACKEND_DOCUMENTATION.md` - Complete API reference
+-   `README.md` - Quick start guide (this file)
+-   `BACKEND_DOCUMENTATION.md` - Complete API reference
 
 ---
 
 ## 💡 Tips
 
-- Default password for all seeded users: `password`
-- Tours have upcoming dates (15-30 days from today)
-- CMS content is fully editable via API
-- Bookings use soft deletes for audit trail
+-   Default password for all seeded users: `password`
+-   Tours have upcoming dates (15-30 days from today)
+-   CMS content is fully editable via API
+-   Bookings use soft deletes for audit trail
 
 ---
 
 **Built with ❤️ for Bdeshi Explorer**
-
