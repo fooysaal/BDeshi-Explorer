@@ -1,17 +1,30 @@
 import './bootstrap';
 import { createApp } from 'vue';
-import LandingPage from './components/LandingPage.vue';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+import { createPinia } from 'pinia';
+import router from './router';
+import axios from 'axios';
 
-// Initialize AOS (Animate On Scroll)
-AOS.init({
-    duration: 800,
-    offset: 100,
-    once: true,
-    easing: 'ease-in-out',
-});
+// Import main component
+import App from './App.vue';
 
-// Create Vue App
-const app = createApp(LandingPage);
+// Configure axios defaults
+axios.defaults.baseURL = window.location.origin;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+axios.defaults.headers.common['Accept'] = 'application/json';
+
+// Create Vue app
+const app = createApp(App);
+const pinia = createPinia();
+
+app.use(pinia);
+app.use(router);
+
+// Make axios available globally
+app.config.globalProperties.$axios = axios;
+
+// Initialize auth
+import { useAuthStore } from './stores/auth';
+const authStore = useAuthStore();
+authStore.initAuth();
+
 app.mount('#app');

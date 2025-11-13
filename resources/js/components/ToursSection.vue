@@ -77,11 +77,14 @@
 
             <div class="flex items-center justify-between">
               <div>
-                <span class="text-2xl font-bold text-emerald-600">৳{{ tour.price }}</span>
+                <span class="text-2xl font-bold text-emerald-600">৳{{ typeof tour.price === 'number' ? tour.price.toLocaleString() : tour.price }}</span>
                 <span class="text-gray-500 text-sm">/person</span>
               </div>
-              <button class="bg-gradient-emerald text-white px-6 py-2 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200">
-                Book Now
+              <button
+                @click="viewTourDetails(tour.id)"
+                class="bg-gradient-emerald text-white px-6 py-2 rounded-full text-sm font-semibold hover:shadow-lg transition-all duration-200"
+              >
+                View Details
               </button>
             </div>
           </div>
@@ -99,90 +102,39 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import axios from 'axios';
 
-const activeFilter = ref('All');
-const filters = ['All', 'Upcoming', 'Popular', 'Budget Friendly'];
+const router = useRouter();
+const activeFilter = ref('All Tours');
+const tours = ref([]);
+const loading = ref(true);
 
-const tours = [
-  {
-    id: 1,
-    name: 'Cox\'s Bazar Beach Paradise',
-    location: 'Cox\'s Bazar',
-    duration: '3 Days 2 Nights',
-    price: '8,500',
-    rating: '4.9',
-    availability: 'Available',
-    image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80',
-    description: 'Experience the world\'s longest natural sea beach with stunning sunsets and fresh seafood.',
-    category: 'Popular'
-  },
-  {
-    id: 2,
-    name: 'Sundarbans Mangrove Adventure',
-    location: 'Sundarbans',
-    duration: '2 Days 1 Night',
-    price: '12,000',
-    rating: '4.8',
-    availability: 'Limited Seats',
-    image: 'https://images.unsplash.com/photo-1564760055775-d63b17a55c44?w=800&q=80',
-    description: 'Explore the largest mangrove forest and spot Royal Bengal Tigers in their natural habitat.',
-    category: 'Upcoming'
-  },
-  {
-    id: 3,
-    name: 'Sylhet Tea Garden Retreat',
-    location: 'Sylhet',
-    duration: '4 Days 3 Nights',
-    price: '7,500',
-    rating: '4.7',
-    availability: 'Available',
-    image: 'https://images.unsplash.com/photo-1563789031959-4c02bcb41319?w=800&q=80',
-    description: 'Immerse yourself in lush tea gardens, waterfalls, and the serene beauty of Sylhet.',
-    category: 'Budget Friendly'
-  },
-  {
-    id: 4,
-    name: 'Historical Dhaka City Tour',
-    location: 'Dhaka',
-    duration: '1 Day',
-    price: '3,500',
-    rating: '4.6',
-    availability: 'Available',
-    image: 'https://images.unsplash.com/photo-1569949381669-ecf31ae8e613?w=800&q=80',
-    description: 'Discover the rich history and vibrant culture of Bangladesh\'s capital city.',
-    category: 'Budget Friendly'
-  },
-  {
-    id: 5,
-    name: 'Bandarban Hill Tracts',
-    location: 'Bandarban',
-    duration: '3 Days 2 Nights',
-    price: '9,500',
-    rating: '4.9',
-    availability: 'Available',
-    image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',
-    description: 'Trek through mountains, visit tribal villages, and enjoy breathtaking hilltop views.',
-    category: 'Popular'
-  },
-  {
-    id: 6,
-    name: 'Kuakata Sea Beach',
-    location: 'Kuakata',
-    duration: '2 Days 1 Night',
-    price: '6,500',
-    rating: '4.5',
-    availability: 'Available',
-    image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800&q=80',
-    description: 'Witness both sunrise and sunset from the same beach - a rare natural phenomenon.',
-    category: 'Upcoming'
-  }
-];
+const filters = computed(() => {
+  const categories = ['All Tours', ...new Set(tours.value.map(t => t.category))];
+  return categories;
+});
 
 const filteredTours = computed(() => {
-  if (activeFilter.value === 'All') {
-    return tours;
+  if (activeFilter.value === 'All Tours') {
+    return tours.value;
   }
-  return tours.filter(tour => tour.category === activeFilter.value);
+  return tours.value.filter(tour => tour.category === activeFilter.value);
+});
+
+const viewTourDetails = (tourId) => {
+  router.push({ name: 'tour-details', params: { id: tourId } });
+};
+
+onMounted(async () => {
+  try {
+    const response = await axios.get('/api/v1/public/tours');
+    tours.value = response.data.data || response.data;
+  } catch (error) {
+    console.error('Error fetching tours:', error);
+  } finally {
+    loading.value = false;
+  }
 });
 </script>
